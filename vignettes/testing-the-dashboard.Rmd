@@ -1,0 +1,54 @@
+---
+title: "testing-the-dashboard"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{testing-the-dashboard}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE, eval=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup }
+knitr::opts_chunk$set(
+	message = FALSE,
+	warning = FALSE,
+	include = FALSE
+)
+# libraries -------------------------------------------
+
+library(lubridate); library(beepr)
+library(tidyverse)
+library(ucbudar); library(ucbcdw)
+library(readxl); library(rlang)
+library(formattable); library(glue)
+library(DBI); library(dbplyr)
+
+
+# database ------------------------------------------------
+
+cdw <- DBI::dbConnect(odbc::odbc(), "CDW2_64", uid = Sys.getenv('CDW_USR'), pwd = Sys.getenv("CDW_PWD"), timeout = 10)
+
+```
+
+
+## Test the Second Tab (Fundraiser Trends)
+
+```{r tab2, eval=FALSE}
+
+library(domreplacement)
+
+
+tab2_data  <- get_tab2_data(collect =T)
+tab2_results  <- build_tab2(
+    proposal_data = tab2_data$proposal_data
+  , contact_data  = tab2_data$contact_data
+  , role_data     = tab2_data$role_data
+)
+
+```
