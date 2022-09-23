@@ -9,8 +9,17 @@ Description: More about what it does (maybe more than one line)
 License: GPLv3 or later
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.2
-Imports: dplyr, DBI, dbplyr, purrr, lubridate, ucbudar, ucbcdw, stringr, slider
+RoxygenNote: 7.2.0
+Imports: 
+  dplyr,
+  DBI,
+  dbplyr, 
+  purrr, 
+  lubridate, 
+  ucbudar, 
+  ucbcdw, 
+  stringr, 
+  slider
 Suggests: 
     knitr,
     rmarkdown

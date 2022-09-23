@@ -39,16 +39,17 @@ build_ask_commit_trends  <- function(proposal_data, metric = 'asks', value = '#'
     filter(
         FISCAL_YR >= first_fy
       , FISCAL_YR <= currentFY
+      , the_amt > 0
     )
 
 
   summarize_metric  <- function(df, val) {
 
-    if(value == '#') {
+    if(val == '#') {
       df |>
         summarize(
-            total_all = n_distinct(PROPOSAL_ID)
-          , ytd_total = n_distinct(case_when(isytd ~ PROPOSAL_ID, T ~ na_dbl))
+            total_all = n_distinct(PROPOSAL_ID, na.rm =T)
+          , ytd_total = n_distinct(case_when(isytd ~ PROPOSAL_ID, T ~ na_dbl), na.rm = T)
         )
     } else {
       df |>

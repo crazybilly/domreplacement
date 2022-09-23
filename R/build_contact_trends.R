@@ -19,7 +19,7 @@ build_contact_trends  <- function(contact_data, role_data, type = 'visits', firs
 
   the_contacts  <- contact_data |>
     filter(
-      AUTHOR_ENTITY_ID %in% local(role_data$FUNDRAISER_ENTITY_ID)
+        AUTHOR_ENTITY_ID         %in% local(role_data$FUNDRAISER_ENTITY_ID)
       | CONTACT_CREDIT_ENTITY_ID %in% local(role_data$FUNDRAISER_ENTITY_ID)
     ) |>
     filter(
@@ -40,6 +40,7 @@ build_contact_trends  <- function(contact_data, role_data, type = 'visits', firs
   } else if (str_detect(str_to_lower(type), 'uniq')) {
 
     the_contacts |>
+      filter(CONTACT_TYPE %in% c('V', 'VIR')) |>
       count_contacted_households()
 
 

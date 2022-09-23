@@ -9,21 +9,23 @@ count_contacted_households  <- function(contact_data) {
 
   hh_contacts  <- contact_data |>
     select(
-      FISCAL_YR
+        FISCAL_YR
       , HH_CORP_ENTITY_ID
       , ALT_HH_CORP_ENTITY_ID
-      , CONTACT_DATE
+      , isytd
     ) |>
     gather(id_type, id, -FISCAL_YR, -isytd) |>
-    filter(!is.na(id))
-  distinct(FISCAL_YR, CONTACT_DATE, isytd)
+    filter(!is.na(id)) |>
+    group_by(FISCAL_YR, id) |>
+    summarize(isytd = as.logical(max(isytd))) |>
+    ungroup()
 
 
   hh_contacts |>
     group_by(FISCAL_YR) |>
     summarize(
-      n_households_all = n_distinct(id)
-      , ytd_households   = n_distinct(case_when(isytd ~ id , T ~ na_dbl))
+        n_households_all = n_distinct(id, na.rm = T)
+      , ytd_households   = n_distinct(case_when(isytd ~ id , T ~ na_dbl), na.rm = T)
     ) |>
     arrange(FISCAL_YR) |>
     mutate(

@@ -10,8 +10,8 @@ count_contacts  <- function(contact_data) {
   contact_data |>
     group_by(FISCAL_YR) |>
     summarize(
-      n_contacts_all = n_distinct(REPORT_ID)
-      , ytd_contacts = n_distinct(case_when(isytd ~ REPORT_ID, T ~ na_dbl))
+        n_contacts_all = n_distinct(REPORT_ID, na.rm = T)
+      , ytd_contacts   = n_distinct(case_when(isytd ~ REPORT_ID, T ~ na_dbl), na.rm = T)
     ) |>
     arrange(FISCAL_YR) |>
     mutate(

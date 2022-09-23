@@ -80,10 +80,16 @@ get_tab2_data  <- function(
   }
 
 
+  qual_data  <- get_qualifications_history() |>
+    semi_join(proposal_data, by = 'PROPOSAL_ID')
+
+
+
   the_results  <- list(
-      role_data = role_data
-    , contact_data = contact_data
-    , proposal_data = proposal_data
+      role_data          = role_data
+    , contact_data       = contact_data
+    , proposal_data      = proposal_data
+    , qual_data          = qual_data
   )
 
   if(collect) {
