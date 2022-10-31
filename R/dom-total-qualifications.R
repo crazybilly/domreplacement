@@ -1,3 +1,16 @@
+#' DOM qualifications
+#'
+#' @description Is this really the right function to use? Isn't the detail avaiable on the DOM itself?
+#'
+#' @param FR_ID a fundraiser's entity_id
+#' @param Unit a unit code
+#' @param Plan_Type plan types to include, leave '0' for all plan types
+#' @param BeginDate a date, as a string in YYYY-MM-DD format. Qualification date should between BeginDate and EndDat
+#' @param EndDate  a date, as a string in YYYY-MM-DD format,
+#'
+#' @return a string that can be used as an SQL query
+#' @export
+#'
 dom_qual_portfolio  <- function(FR_ID, Unit, Plan_Type = '0', BeginDate = '2021-07-01', EndDate = '2022-06-30') {
   BeginDate  <-  glue("to_date('{BeginDate}', 'YYYY-MM-DD')")
   EndDate    <-  glue("to_date('{EndDate}'  , 'YYYY-MM-DD')")
@@ -42,6 +55,17 @@ dom_qual_portfolio  <- function(FR_ID, Unit, Plan_Type = '0', BeginDate = '2021-
 
 
 
+#' Build a query for Total Qualifications as calculated in the DOM
+#'
+#' @param FR_ID a fundraiser's entity_id
+#' @param Unit a unit code
+#' @param Plan_Type plan types to include, leave '0' for all plan types
+#' @param BeginDate a date, as a string in YYYY-MM-DD format. Qualification date should between BeginDate and EndDat
+#' @param EndDate  a date, as a string in YYYY-MM-DD format
+#'
+#' @return a string that can be used as an SQL query
+#' @export
+#'
 dom_total_qualifications  <- function(FR_ID, Unit, Plan_Type = '0', BeginDate = '2021-07-01', EndDate = '2022-06-30') {
 
   cte_portfolio <- dom_qual_portfolio(FR_ID = FR_ID, Unit = Unit, Plan_Type = Plan_Type, BeginDate = BeginDate, EndDate = EndDate)
